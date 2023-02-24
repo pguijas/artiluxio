@@ -39,6 +39,19 @@ dependencies:
   # TF lite flutter
   tflite_flutter: ^0.9.0
 
+  # Image processing
+  image: ^4.0.15 # downgrade to work with the helper # ^4.0.15
+
+  # Example image processing
+  image_picker: ^0.8.6+3
+  collection: ^1.15.0
+  logger: ^1.0.0
+
+  path_provider: ^2.0.13
+
+  permission_handler: ^10.2.0
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -66,6 +79,7 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
+    - assets/
     - assets/models/
 
   # An image asset can refer to one or more resolution-specific "variants", see
