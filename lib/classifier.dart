@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart';
 
@@ -32,7 +33,7 @@ class Classifier {
     Image transformed = copyResize(image, height: height, width: width);
 
     // Normalize between [0,1]
-    transformed = transformed.convert(format: Format.float32);  // float32 for the models?
+    transformed = transformed.convert(format: Format.float32);
 
     // Save the image
     String outputFile = _outputFolder + saveAs;
@@ -41,16 +42,88 @@ class Classifier {
     return transformed;
   }
 
-  void transfer(Image input, Image style) {
+  Future<void> transfer(Image input, Image style) async {
     print("Preprocessing inputs...");
-    input = _preprocess(input, 384, 384, "input.jpg");
-    style = _preprocess(style, 256, 256, "style.jpg");
+    Image processedInput = _preprocess(input, 384, 384, "input.jpg");
+    Image processedStyle = _preprocess(style, 256, 256, "style.jpg");
 
-    print("Allocating tensors...");
-    _predictorInterpreter.allocateTensors();
+    final inputShape = _predictorInterpreter.getInputTensor(0).shape;
+    final outputShape = _predictorInterpreter.getOutputTensor(0).shape;
+    print(inputShape);  // [1, 256, 256, 3]
+    print(outputShape);  // [1, 1, 1, 100]
 
-    // if output tensor shape [1,1,1,100] and type is float32
-    var output = List.filled(1*1*1*100, 0).reshape([1,1,1,100]);
+    var outputStyle = List.filled(1*1*1*100, 0).reshape([1,1,1,100]);
+    var styleBottleneck = [
+      [
+        [List.generate(100, (index) => 0.0)]
+      ]
+    ];
+    print("Predicting style...");
+    _predictorInterpreter.run(processedStyle.toUint8List(), styleBottleneck);
+    print("Prediction finished");
+
+    // inputs: [1, 384, 384, 3] (0) and [1, 1, 1, 100] (1)
+    // output: [1, 384, 384, 3] (0)
+
+    var transferInputs = [processedInput.toUint8List(), styleBottleneck];
+
+    var outputTransformation = List.filled(1*384*384*3, 0.0).reshape([1,384,384,3]);
+    print(outputTransformation.shape);
+    print(outputTransformation);
+
+    var mapOutputTransformation = Map<int, dynamic>();
+    mapOutputTransformation[0] = outputTransformation;
+
+    var outputsForStyleTransfer = Map<int, Object>();
+    // stylized_image 1 384 384 3
+    var outputImageData = [
+      List.generate(
+        384,
+            (index) => List.generate(
+          384,
+              (index) => List.generate(3, (index) => 0.0),
+        ),
+      ),
+    ];
+    outputsForStyleTransfer[0] = outputImageData;
+
+    print("Prediction transformation...");
+    _transferInterpreter.runForMultipleInputs(transferInputs, outputsForStyleTransfer);
+    print("Prediciton finished");
+
+    print("Converting prediction to image...");
+    var outputImage = _convertArrayToImage(outputImageData, 384);
+    outputImage = copyResize(outputImage, width: input.width, height: input.height);
+    print("Conversion finished");
+
+    print("Saving output...");
+    String outputFile = _outputFolder + "output.jpg";
+    bool b = await encodeImageFile(outputFile, outputImage);
+    if (b) {
+      print("Output saved successfully");
+    } else {
+      print("Could not save the output");
+    }
+
+  }
+
+  Image _convertArrayToImage(List<List<List<List<double>>>> imageArray, int inputSize) {
+    Uint8List bytes = Uint8List.fromList(
+        List.filled(inputSize * inputSize * 3, 0));
+
+    for (int x = 0; x < inputSize; x++) {
+      for (int y = 0; y < inputSize; y++) {
+        int pixelIndex = (x * inputSize + y) * 3;
+        bytes[pixelIndex] = (imageArray[0][x][y][0] * 255).toInt();
+        bytes[pixelIndex + 1] = (imageArray[0][x][y][1] * 255).toInt();
+        bytes[pixelIndex + 2] = (imageArray[0][x][y][2] * 255).toInt();
+      }
+    }
+
+    Image newImage = Image.fromBytes(
+        width: inputSize, height: inputSize, bytes: bytes.buffer);
+
+    return newImage;
   }
 
   List<double> classify(String rawText) {

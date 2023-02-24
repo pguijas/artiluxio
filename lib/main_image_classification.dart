@@ -113,7 +113,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
     img.Image input = img.decodeImage(_inputImage!.readAsBytesSync())!;
     img.Image style = img.decodeImage(_styleImage!.readAsBytesSync())!;
-    classifier.transfer(input, style);
+    await classifier.transfer(input, style);
+    setState(() {
+      _inputImage = null;
+      _styleImage = null;
+      _outputImage = File('/storage/emulated/0/Download/output.jpg');
+    });
 
   }
 
