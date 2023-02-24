@@ -38,7 +38,6 @@ class Classifier {
     final vocabList = vocab.split('\n');
     for (var i = 0; i < vocabList.length; i++) {
       var entry = vocabList[i].trim().split(' ');
-      print(entry[1]);
       dict[entry[0]] = int.parse(entry[1]);
     }
     _dict = dict;
