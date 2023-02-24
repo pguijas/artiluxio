@@ -17,8 +17,12 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          fontFamily: 'Roboto',
+          scaffoldBackgroundColor: Colors.white,
         ),
-        darkTheme: ThemeData.dark(), // standard dark theme
+        darkTheme: ThemeData.dark().copyWith(
+          scaffoldBackgroundColor: Colors.black,
+        ),
         themeMode: ThemeMode.system, // device controls theme
         home: BlocProvider(
             create: (_) => AppBloc(),
