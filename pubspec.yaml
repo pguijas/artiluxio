@@ -38,6 +38,10 @@ dependencies:
   flutter_bloc: ^8.1.2
   tflite: 1.0.6
   image_picker: ^0.8.6+3
+  flutter_speed_dial: ^6.2.0
+  photo_view: ^0.14.0
+
+
 
 
 dev_dependencies:
