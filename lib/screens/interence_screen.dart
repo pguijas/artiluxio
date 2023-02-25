@@ -1,11 +1,32 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:artiluxio/model/style_transferer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../bloc/app_bloc.dart';
+
 
 class InferenceScreen extends StatelessWidget {
   String imgPath;
+  AppBloc appBloc;
+  final double imgSize = 110.0;
 
-  InferenceScreen(this.imgPath, {super.key});
+  InferenceScreen(this.imgPath, this.appBloc, {super.key});
+
+  Widget itembluider(List<String> styleImages, int i) {
+    return InkWell(
+        onTap: () {
+          print("miau");
+        }, // Image tapped
+        splashColor: Colors.black87,
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(50), // no funciona ----- -----
+            child: Ink.image(
+              image: AssetImage(styleImages[i]),
+              height: imgSize,
+              width: imgSize,
+              fit: BoxFit.cover,
+            )));
+  }
 
   void _inference(BuildContext context) async {
     File inputFile = File(imgPath);
@@ -23,6 +44,8 @@ class InferenceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> styleImages = appBloc.styleImages;
+
     bool isDarkMode =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
 
@@ -64,6 +87,20 @@ class InferenceScreen extends StatelessWidget {
             tooltip: 'Increment',
             child: const Icon(Icons.adb),
           ),
+          Container(
+            margin: const EdgeInsets.only(top: 40.0),
+            child: SizedBox(
+              height: imgSize,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.all(0),
+                itemCount: styleImages.length,
+                itemBuilder: (_, i) => itembluider(styleImages, i),
+                separatorBuilder: (_, i) => const SizedBox(width: 10),
+              ),
+            ),
+          ),
+
           //
         ],
       ),
