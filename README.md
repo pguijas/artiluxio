@@ -58,20 +58,33 @@ flutter pub get
 flutter run
 ```
 
-## 📜 Licenses
+## 📜 License
 
-[GNU General Public License, Version 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
-
-Multiple licences have been taken into account, such as Berkeley Software Distribution (BSD), Massachusetts Institute of Technology (MIT) or Apache, but the licence used in this project is GNU General Public License v3 (GPLv3). The main reason for choosing GPLv3 was that it is somewhat more restrictive than the other candidates. Also, one of its most important points is that it is a copyleft licence,
+Multiple licences have been taken into account, such as Berkeley Software Distribution (BSD), Massachusetts Institute of Technology (MIT) or Apache, but the licence used in this project is [GNU General Public License, Version 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html). The main reason for choosing GPLv3 was that it is somewhat more restrictive than the other candidates. Also, one of its most important points is that it is a copyleft licence,
 i.e. it is required to preserve the same freedoms on copying and derivatives. In addition, it should be noted that GPLv3 is compatible with the licences of the libraries and tools used, which are indicated below.
 
-[Magenta model](https://github.com/magenta/magenta) --> Apache-2.0 \
-[cupertino_icons](https://pub.dev/packages/cupertino_icons/license) --> The MIT License \
-[flutter_bloc](https://pub.dev/packages/flutter_bloc) --> The MIT License \
-[image_picker](https://pub.dev/packages/image_picker/license) --> Apache-2.0, BSD-3-Clause \
-[flutter_speed_dial](https://pub.dev/packages/flutter_speed_dial) --> The MIT License \
-[tflite_flutter](https://pub.dev/packages/tflite_flutter) --> Apache-2.0 \
-[photo_view](https://pub.dev/packages/photo_view) --> The MIT License \
-[share_plus](https://pub.dev/packages/share_plus/license) --> BSD-3-Clause \
-[flutter_lints](https://pub.dev/packages/flutter_lints) --> BSD-3-Clause \
-[roboto font](https://github.com/googlefonts/roboto) --> Apache-2.0 
+- [Magenta model](https://github.com/magenta/magenta) --> Apache-2.0
+- [cupertino_icons](https://pub.dev/packages/cupertino_icons/license) --> The MIT License
+- [flutter_bloc](https://pub.dev/packages/flutter_bloc) --> The MIT License
+- [image_picker](https://pub.dev/packages/image_picker/license) --> Apache-2.0, BSD-3-Clause
+- [flutter_speed_dial](https://pub.dev/packages/flutter_speed_dial) --> The MIT License
+- [tflite_flutter](https://pub.dev/packages/tflite_flutter) --> Apache-2.0
+- [photo_view](https://pub.dev/packages/photo_view) --> The MIT License
+- [share_plus](https://pub.dev/packages/share_plus/license) --> BSD-3-Clause
+- [flutter_lints](https://pub.dev/packages/flutter_lints) --> BSD-3-Clause
+- [roboto font](https://github.com/googlefonts/roboto) --> Apache-2.0
+
+Furthermore, it should be noted that the main objective of an open license is to enable a collaborative and open environment. In this way, the application can be expanded and/or adapted to the different needs that the community may have.
+
+One of the main purposes is the inclusion of new models optimized for mobile as well as the future inclusion of adding the possibility of API for heavier models. All this with the aim of giving the greatest versatility and functionality to the application.  These lines of future work will be discussed in the next section.
+
+Finally, it is worth highlighting that it has been initially promoted using the students' communication channels, trying to encourage the use and collaboration in the project.
+
+## 📈 Future work
+
+As mentioned, the current version only allows image processing using two small models locally. However, there will be multiple lines of future work, among which the following stand out:
+
+- Inclusion of new models.
+- Inclusion of larger models using an alternative cloud approach.
+- Real-time inferences (using the camera).
+- Creation of a marketplace for the community to publish their image-to-image models.
