@@ -3,7 +3,7 @@
 ## An image style transfer application
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-
+![Stars](https://img.shields.io/github/stars/pguijas/artiluxio?color=green)
 
 Artistic style transfer involves generating a new image called a pastiche by merging two input images - one that represents the content and another that represents the artistic style. It is one of the most thrilling advancements in deep learning in recent times. This application is used to transfer styles between images, allowing you to create new outputs full of creativity.
 
