@@ -50,14 +50,13 @@ packages:
     source: hosted
     version: "1.1.1"
   collection:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: collection
       sha256: cfc915e6923fe5ce6e153b0723c753045de46de1b4d63771530504004a45fae0
       url: "https://pub.dev"
     source: hosted
     version: "1.17.0"
-<<<<<<< HEAD
   convert:
     dependency: transitive
     description:
@@ -66,8 +65,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
-=======
->>>>>>> main
   cross_file:
     dependency: transitive
     description:
@@ -76,7 +73,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.3+4"
-<<<<<<< HEAD
   crypto:
     dependency: transitive
     description:
@@ -85,8 +81,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
-=======
->>>>>>> main
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -148,8 +142,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.8"
-<<<<<<< HEAD
-=======
   flutter_speed_dial:
     dependency: "direct main"
     description:
@@ -158,7 +150,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.2.0"
->>>>>>> main
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -185,7 +176,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-<<<<<<< HEAD
   image:
     dependency: "direct main"
     description:
@@ -194,8 +184,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.15"
-=======
->>>>>>> main
   image_picker:
     dependency: "direct main"
     description:
@@ -252,14 +240,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-  logger:
-    dependency: "direct main"
-    description:
-      name: logger
-      sha256: c40f9ef51e5bffb4ce69ad2d8c8aad7bd47ec109c090521109b63a4e2bc27191
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.2"
   matcher:
     dependency: transitive
     description:
@@ -300,7 +280,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.2"
-<<<<<<< HEAD
   path_provider:
     dependency: "direct main"
     description:
@@ -349,46 +328,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.7"
-  permission_handler:
-    dependency: "direct main"
-    description:
-      name: permission_handler
-      sha256: "33c6a1253d1f95fd06fa74b65b7ba907ae9811f9d5c1d3150e51417d04b8d6a8"
-      url: "https://pub.dev"
-    source: hosted
-    version: "10.2.0"
-  permission_handler_android:
-    dependency: transitive
-    description:
-      name: permission_handler_android
-      sha256: "8028362b40c4a45298f1cbfccd227c8dd6caf0e27088a69f2ba2ab15464159e2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "10.2.0"
-  permission_handler_apple:
-    dependency: transitive
-    description:
-      name: permission_handler_apple
-      sha256: "9c370ef6a18b1c4b2f7f35944d644a56aa23576f23abee654cf73968de93f163"
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.0.7"
-  permission_handler_platform_interface:
-    dependency: transitive
-    description:
-      name: permission_handler_platform_interface
-      sha256: "68abbc472002b5e6dfce47fe9898c6b7d8328d58b5d2524f75e277c07a97eb84"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.9.0"
-  permission_handler_windows:
-    dependency: transitive
-    description:
-      name: permission_handler_windows
-      sha256: f67cab14b4328574938ecea2db3475dad7af7ead6afab6338772c5f88963e38b
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.2"
   petitparser:
     dependency: transitive
     description:
@@ -397,15 +336,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.0"
-  platform:
-    dependency: transitive
-    description:
-      name: platform
-      sha256: "4a451831508d7d6ca779f7ac6e212b4023dd5a7d08a27a63da33756410e32b76"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.0"
-=======
   photo_view:
     dependency: "direct main"
     description:
@@ -414,7 +344,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.14.0"
->>>>>>> main
+  platform:
+    dependency: transitive
+    description:
+      name: platform
+      sha256: "4a451831508d7d6ca779f7ac6e212b4023dd5a7d08a27a63da33756410e32b76"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -423,7 +360,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
-<<<<<<< HEAD
   pointycastle:
     dependency: transitive
     description:
@@ -440,15 +376,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.4"
-  quiver:
-    dependency: transitive
-    description:
-      name: quiver
-      sha256: b1c1ac5ce6688d77f65f3375a9abb9319b3cb32486bdc7a1e0fdf004d7ba4e47
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.2.1"
-=======
   provider:
     dependency: transitive
     description:
@@ -457,7 +384,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.5"
->>>>>>> main
+  quiver:
+    dependency: transitive
+    description:
+      name: quiver
+      sha256: b1c1ac5ce6688d77f65f3375a9abb9319b3cb32486bdc7a1e0fdf004d7ba4e47
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -511,7 +445,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.16"
-<<<<<<< HEAD
   tflite_flutter:
     dependency: "direct main"
     description:
@@ -520,16 +453,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.0"
-=======
-  tflite:
-    dependency: "direct main"
-    description:
-      name: tflite
-      sha256: "821e10731cb3f268565aeaf960e3e80825dfcbcf5e7caabb8937fe224fcb78bb"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.6"
->>>>>>> main
   typed_data:
     dependency: transitive
     description:

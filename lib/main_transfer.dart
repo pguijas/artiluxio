@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'style_transferer.dart';
+import 'model/style_transferer.dart';
 
 void main() {
   runApp(const MyApp());

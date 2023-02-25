@@ -1,10 +1,24 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:artiluxio/model/style_transferer.dart';
 
 class InferenceScreen extends StatelessWidget {
   String imgPath;
 
   InferenceScreen(this.imgPath, {super.key});
+
+  void _inference(BuildContext context) async {
+    File inputFile = File(imgPath);
+    File styleFile = File("/storage/emulated/0/Downloads/picasso.jpg");
+    StyleTransferer styleTransferer = StyleTransferer("magenta", "fp16");
+    String output = await styleTransferer.transfer(inputFile, styleFile);
+    imgPath = output;
+    
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => InferenceScreen(imgPath)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +57,11 @@ class InferenceScreen extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
+          ),
+          FloatingActionButton(
+            onPressed: () {_inference(context); },
+            tooltip: 'Increment',
+            child: const Icon(Icons.adb),
           ),
           //
         ],
