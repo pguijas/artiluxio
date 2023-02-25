@@ -35,6 +35,11 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  flutter_bloc: ^8.1.2
+  tflite: 1.0.6
+  image_picker: ^0.8.6+3
+  flutter_speed_dial: ^6.2.0
+  photo_view: ^0.14.0
 
   # TF lite flutter
   tflite_flutter: ^0.9.0
@@ -75,8 +80,10 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+
+  assets:
+    - assets/images/example.jpg
+    - assets/logo.png
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/
@@ -93,17 +100,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+     - family: Roboto
+       fonts:
+         - asset: fonts/Roboto-Thin.ttf
+         - asset: fonts/Roboto-Light.ttf
+         - asset: fonts/Roboto-Regular.ttf
+         - asset: fonts/Roboto-Black.ttf
