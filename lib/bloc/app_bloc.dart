@@ -7,11 +7,17 @@ part 'app_bloc_event.dart';
 part 'app_bloc_state.dart';
 
 class AppBloc extends Bloc<AppBlocEvent, AppBlocState> {
+  // Models and style images
   List<String> models = ["magenta_fp16", "magenta_int8"];
   List<String> styleImages = [];
 
+  /////////////////////////
+  /// Usefull functions
+  /////////////////////////
+
   final picker = ImagePicker();
 
+  // Obtein image from camera or gallery and callback
   void getInputImage(fromCam, context, callback) async {
     ImageSource source = fromCam ? ImageSource.camera : ImageSource.gallery;
     final pickedFile = await picker.pickImage(source: source);
@@ -19,6 +25,7 @@ class AppBloc extends Bloc<AppBlocEvent, AppBlocState> {
     callback(context, pickedFile.path);
   }
 
+  // Run inference (notifies)
   void _inference(
       String imgPath, String stylePath, StyleTransferer model) async {
     // Inference
@@ -30,7 +37,7 @@ class AppBloc extends Bloc<AppBlocEvent, AppBlocState> {
     add(InferenceDoneEvent(output));
   }
 
-  void _pick_and_inference(String imgPath, StyleTransferer model) async {
+  void _pickAndInference(String imgPath, StyleTransferer model) async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile == null) {
       add(InferenceDoneEvent(""));
@@ -39,17 +46,24 @@ class AppBloc extends Bloc<AppBlocEvent, AppBlocState> {
     _inference(imgPath, pickedFile.path, model);
   }
 
+  /////////////////////////////
+  /// Bloc - Event Processing
+  /////////////////////////////
+
   AppBloc()
       : super(AppBlocState(
             styleIndex: 0, actualInferencePath: "", modelIndex: 0)) {
-    // STYLE IMAGES
+    // Get style images
     var l = Iterable<int>.generate(25).toList();
     styleImages = l.map((e) => "assets/style_images/style$e.jpg").toList();
 
-    // ADDED STYLE IMAGE
     on<ChangedStyleImageEvent>((event, emit) {
-      // Notify that inference is running
-      add(RunningInferenceEvent());
+      // Notify the update style index
+      emit(AppBlocState(
+          styleIndex: event.styleIndex,
+          actualInferencePath: state.actualInferencePath,
+          modelIndex: state.modelIndex,
+          runningInference: state.runningInference));
 
       // Check if none or custom image
       switch (event.styleIndex) {
@@ -61,11 +75,12 @@ class AppBloc extends Bloc<AppBlocEvent, AppBlocState> {
           break;
 
         case 1:
-          // Load image (from galery)
-          _pick_and_inference(event.sourceImagePath, state.model);
+          add(RunningInferenceEvent());
+          _pickAndInference(event.sourceImagePath, state.model);
           break;
 
         default:
+          add(RunningInferenceEvent());
           _inference(event.sourceImagePath, styleImages[event.styleIndex - 2],
               state.model);
           break;
@@ -73,7 +88,6 @@ class AppBloc extends Bloc<AppBlocEvent, AppBlocState> {
     });
 
     on<RunningInferenceEvent>((event, emit) {
-      print("Running Inference Event");
       emit(AppBlocState(
           styleIndex: state.styleIndex,
           actualInferencePath: state.actualInferencePath,
@@ -82,7 +96,6 @@ class AppBloc extends Bloc<AppBlocEvent, AppBlocState> {
     });
 
     on<InferenceDoneEvent>((event, emit) {
-      print("Inference Done Event");
       emit(AppBlocState(
           styleIndex: state.styleIndex,
           actualInferencePath: event.inferencePath,
@@ -91,7 +104,6 @@ class AppBloc extends Bloc<AppBlocEvent, AppBlocState> {
     });
 
     on<ChangedModelEvent>((event, emit) {
-      print("Changed Model Event");
       state.model = StyleTransferer(models[event.modelIndex]);
       emit(AppBlocState(
           styleIndex: state.styleIndex,
