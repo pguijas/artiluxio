@@ -11,20 +11,63 @@ class InferenceScreen extends StatelessWidget {
 
   InferenceScreen(this.imgPath, this.appBloc, {super.key});
 
-  Widget itembluider(List<String> styleImages, int i) {
-    return InkWell(
-        onTap: () {
-          print("miau");
-        }, // Image tapped
-        splashColor: Colors.black87,
-        child: ClipRRect(
-            borderRadius: BorderRadius.circular(50), // no funciona ----- -----
-            child: Ink.image(
-              image: AssetImage(styleImages[i]),
-              height: imgSize,
-              width: imgSize,
-              fit: BoxFit.cover,
-            )));
+  Widget itembluider(List<String> styleImages, int i, bool isDarkMode) {
+    switch (i) {
+      case 0:
+        {
+          return ClipRRect(
+              borderRadius: BorderRadius.circular(5),
+              child: InkWell(
+                  onTap: () {
+                    print("miau");
+                  }, // Image tapped
+                  splashColor: Colors.black87,
+                  child: Container(
+                    height: imgSize,
+                    width: imgSize,
+                    color: isDarkMode ? Colors.white10 : Colors.black12,
+                    child: const Center(
+                      child: Icon(Icons.auto_fix_off),
+                    ),
+                  )));
+        }
+
+      case 1:
+        {
+          return ClipRRect(
+              borderRadius: BorderRadius.circular(5),
+              child: InkWell(
+                  onTap: () {
+                    print("miau");
+                  }, // Image tapped
+                  splashColor: Colors.black87,
+                  child: Container(
+                    height: imgSize,
+                    width: imgSize,
+                    color: isDarkMode ? Colors.white10 : Colors.black12,
+                    child: const Center(
+                      child: Icon(Icons.add_photo_alternate),
+                    ),
+                  )));
+        }
+
+      default:
+        {
+          return ClipRRect(
+              borderRadius: BorderRadius.circular(5), // no funciona ----- -----
+              child: InkWell(
+                  onTap: () {
+                    print("miau");
+                  }, // Image tapped
+                  splashColor: Colors.black87,
+                  child: Image(
+                    image: AssetImage(styleImages[i - 2]),
+                    height: imgSize,
+                    width: imgSize,
+                    fit: BoxFit.cover,
+                  )));
+        }
+    }
   }
 
   @override
@@ -69,14 +112,15 @@ class InferenceScreen extends StatelessWidget {
           ),
 
           Container(
-            margin: const EdgeInsets.only(top: 40.0),
+            margin: const EdgeInsets.only(top: 35.0),
             child: SizedBox(
               height: imgSize,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.all(0),
-                itemCount: styleImages.length,
-                itemBuilder: (_, i) => itembluider(styleImages, i),
+                itemCount: styleImages.length +
+                    2, // +2 because of None and Custom Image
+                itemBuilder: (_, i) => itembluider(styleImages, i, isDarkMode),
                 separatorBuilder: (_, i) => const SizedBox(width: 10),
               ),
             ),
