@@ -7,19 +7,23 @@ class AddModelEvent extends AppBlocEvent {
   final String model;
   AddModelEvent(this.model);
 }
-*/
 
 class ModelLoadedEvent extends AppBlocEvent {
   final String model;
   ModelLoadedEvent(this.model);
 }
+*/
 
-class AddedSourceImageEvent extends AppBlocEvent {
-  final XFile image;
-  AddedSourceImageEvent(this.image);
+class RunningInferenceEvent extends AppBlocEvent {}
+
+class InferenceDoneEvent extends AppBlocEvent {
+  final String inferencePath;
+  InferenceDoneEvent(this.inferencePath);
 }
 
-class AddedStyleImageEvent extends AppBlocEvent {
-  final XFile image;
-  AddedStyleImageEvent(this.image);
+class ChangedStyleImageEvent extends AppBlocEvent {
+  final int styleIndex;
+  String sourceImagePath;
+  ChangedStyleImageEvent(
+      {required this.sourceImagePath, required this.styleIndex});
 }

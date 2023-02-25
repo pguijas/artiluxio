@@ -1,23 +1,13 @@
 part of 'app_bloc.dart';
 
-abstract class AppBlocState {
-  bool isDarkMode = false;
-  bool modelLoaded = false; // borrarlo
-}
+class AppBlocState {
+  int styleIndex = 0;
+  String actualInferencePath = "";
+  bool runningInference = false;
+  StyleTransferer model = StyleTransferer("magenta_fp16");
 
-class AppBlocInitial extends AppBlocState {}
-
-class AppBlocModelLoaded extends AppBlocState {
-  final String model;
-  AppBlocModelLoaded(this.model);
-}
-
-class AppBlocImgSelected extends AppBlocState {
-  final XFile sourceImage;
-  AppBlocImgSelected(this.sourceImage);
-}
-
-class AppBlocInferenceDone extends AppBlocImgSelected {
-  final XFile outputImage;
-  AppBlocInferenceDone(sourceImage, this.outputImage) : super(sourceImage);
+  AppBlocState(
+      {required this.styleIndex,
+      required this.actualInferencePath,
+      this.runningInference = false});
 }

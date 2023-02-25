@@ -1,13 +1,13 @@
-import 'dart:convert';
+import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
+import '../model/model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 part 'app_bloc_event.dart';
 part 'app_bloc_state.dart';
 
 class AppBloc extends Bloc<AppBlocEvent, AppBlocState> {
-  List<String> models = ["example.tflite"];
+  List<String> models = ["magenta_fp16", "magenta_int8"];
   List<String> styleImages = [];
 
   final picker = ImagePicker();
@@ -16,31 +16,72 @@ class AppBloc extends Bloc<AppBlocEvent, AppBlocState> {
     ImageSource source = fromCam ? ImageSource.camera : ImageSource.gallery;
     final pickedFile = await picker.pickImage(source: source);
     if (pickedFile == null) return;
-    print("Image Path: ${pickedFile.path}");
     callback(context, pickedFile.path);
   }
 
-  AppBloc() : super(AppBlocInitial()) {
+  void _inference(
+      String imgPath, String stylePath, StyleTransferer model) async {
+    // Inference
+    File inputFile = File(imgPath);
+    File styleFile = File(stylePath);
+    if (model.notLoaded) await model.loadModel();
+    String output = await model.transfer(inputFile, styleFile);
+    // Notify
+    add(InferenceDoneEvent(output));
+  }
+
+  void _pick_and_inference(String imgPath, StyleTransferer model) async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile == null) {
+      add(InferenceDoneEvent(""));
+      return;
+    }
+    _inference(imgPath, pickedFile.path, model);
+  }
+
+  AppBloc() : super(AppBlocState(styleIndex: 0, actualInferencePath: "")) {
     // STYLE IMAGES
     var l = Iterable<int>.generate(25).toList();
     styleImages = l.map((e) => "assets/style_images/style$e.jpg").toList();
 
-    // MODEL LOADED
-    on<ModelLoadedEvent>((event, emit) {
-      print("Model Loaded Event");
-      //si state es initial, carga pantalla inicial (antes pantalla con logo)
-    });
-
-    // ADDED SOURCE IMAGE
-    on<AddedSourceImageEvent>((event, emit) {
-      print("Added Source Image Event");
-      //si state es AppBlocModelLoaded cambia a pantalla inferencia
-    });
-
     // ADDED STYLE IMAGE
-    on<AddedStyleImageEvent>((event, emit) {
-      print("Added Style Image Event");
-      //si estate es AppBlocImgSelected muestra la inferencia (y la cachea y tal)
+    on<ChangedStyleImageEvent>((event, emit) {
+      // Notify that inference is running
+      add(RunningInferenceEvent());
+
+      // Check if none or custom image
+      switch (event.styleIndex) {
+        case 0:
+          emit(AppBlocState(
+              styleIndex: event.styleIndex, actualInferencePath: ""));
+          break;
+
+        case 1:
+          // Load image (from galery)
+          _pick_and_inference(event.sourceImagePath, state.model);
+          break;
+
+        default:
+          _inference(event.sourceImagePath, styleImages[event.styleIndex - 2],
+              state.model);
+          break;
+      }
+    });
+
+    on<RunningInferenceEvent>((event, emit) {
+      print("Running Inference Event");
+      emit(AppBlocState(
+          styleIndex: state.styleIndex,
+          actualInferencePath: state.actualInferencePath,
+          runningInference: true));
+    });
+
+    on<InferenceDoneEvent>((event, emit) {
+      print("Inference Done Event");
+      emit(AppBlocState(
+          styleIndex: state.styleIndex,
+          actualInferencePath: event.inferencePath,
+          runningInference: false));
     });
   }
 }
