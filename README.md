@@ -1,7 +1,9 @@
 ![Logo](https://user-images.githubusercontent.com/53833717/221363833-8f73ec79-bfe4-4144-961f-e2a950a24254.png)
-# **Artiluxio**
+# **artiluxio**
 ## An image style transfer application
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 
 Artistic style transfer involves generating a new image called a pastiche by merging two input images - one that represents the content and another that represents the artistic style. It is one of the most thrilling advancements in deep learning in recent times. This application is used to transfer styles between images, allowing you to create new outputs full of creativity.
 
@@ -48,7 +50,7 @@ It is well known among the AI community that the training, but also the inferenc
 
 ## 📥 Installation
 
-[Initial setup](https://pub.dev/packages/tflite_flutter) - Add TensorFlow Lite dynamic libraries to your app.
+Please take a minute to read the [TensorFlow Lite Flutter Plugin](https://pub.dev/packages/tflite_flutter) page to add TensorFlow Lite dynamic libraries to your app.
 
 Desktop
 ```
@@ -62,7 +64,6 @@ flutter run
 
 Multiple licences have been taken into account, such as Berkeley Software Distribution (BSD), Massachusetts Institute of Technology (MIT) or Apache, but the licence used in this project is GNU General Public License v3 (GPLv3). The main reason for choosing GPLv3 was that it is somewhat more restrictive than the other candidates. Also, one of its most important points is that it is a copyleft licence,
 i.e. it is required to preserve the same freedoms on copying and derivatives. In addition, it should be noted that GPLv3 is compatible with the licences of the libraries and tools used, which are indicated below.
-
 
 [Magenta model](https://github.com/magenta/magenta) --> Apache-2.0 \
 [cupertino_icons](https://pub.dev/packages/cupertino_icons/license) --> The MIT License \
