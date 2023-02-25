@@ -22,7 +22,8 @@ class InferenceScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(5),
               child: InkWell(
                   onTap: () {
-                    print("miau");
+                    this.appBloc.add(ChangedStyleImageEvent(
+                        customStylePath: "", styleIndex: i));
                   }, // Image tapped
                   splashColor: Colors.black87,
                   child: Container(
@@ -40,8 +41,9 @@ class InferenceScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(5),
               child: InkWell(
                   onTap: () {
-                    print("miau");
-                  }, // Image tapped
+                    this.appBloc.add(ChangedStyleImageEvent(
+                        customStylePath: "", styleIndex: i));
+                  }, // Image tapped// Image tapped
                   splashColor: Colors.black87,
                   child: Container(
                     height: imgSize,
@@ -60,7 +62,8 @@ class InferenceScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(5), // no funciona ----- -----
               child: InkWell(
                   onTap: () {
-                    print("miau");
+                    this.appBloc.add(ChangedStyleImageEvent(
+                        customStylePath: "", styleIndex: i));
                   }, // Image tapped
                   splashColor: Colors.black87,
                   child: Image(
@@ -139,8 +142,12 @@ class InferenceScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(0),
                       itemCount: styleImages.length +
                           2, // +2 because of None and Custom Image
-                      itemBuilder: (_, i) => itembluider(styleImages, i, 0,
-                          isDarkMode, Theme.of(context).colorScheme.primary),
+                      itemBuilder: (_, i) => itembluider(
+                          styleImages,
+                          i,
+                          state.styleIndex,
+                          isDarkMode,
+                          Theme.of(context).colorScheme.primary),
                       separatorBuilder: (_, i) => const SizedBox(width: 10),
                     ),
                   ),

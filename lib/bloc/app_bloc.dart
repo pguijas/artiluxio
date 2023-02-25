@@ -20,11 +20,14 @@ class AppBloc extends Bloc<AppBlocEvent, AppBlocState> {
     callback(context, pickedFile.path);
   }
 
-  AppBloc() : super(AppBlocInitial()) {
+  AppBloc()
+      : super(AppBlocState(
+            styleIndex: 0, customStylePath: "", actualInferencePath: "")) {
     // STYLE IMAGES
     var l = Iterable<int>.generate(25).toList();
     styleImages = l.map((e) => "assets/style_images/style$e.jpg").toList();
 
+    /*
     // MODEL LOADED
     on<ModelLoadedEvent>((event, emit) {
       print("Model Loaded Event");
@@ -36,10 +39,14 @@ class AppBloc extends Bloc<AppBlocEvent, AppBlocState> {
       print("Added Source Image Event");
       //si state es AppBlocModelLoaded cambia a pantalla inferencia
     });
-
+    */
     // ADDED STYLE IMAGE
-    on<AddedStyleImageEvent>((event, emit) {
+    on<ChangedStyleImageEvent>((event, emit) {
       print("Added Style Image Event");
+      emit(AppBlocState(
+          styleIndex: event.styleIndex,
+          customStylePath: event.customStylePath,
+          actualInferencePath: state.actualInferencePath));
       //si estate es AppBlocImgSelected muestra la inferencia (y la cachea y tal)
     });
   }

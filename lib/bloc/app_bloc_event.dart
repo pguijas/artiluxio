@@ -19,7 +19,9 @@ class AddedSourceImageEvent extends AppBlocEvent {
   AddedSourceImageEvent(this.image);
 }
 
-class AddedStyleImageEvent extends AppBlocEvent {
-  final XFile image;
-  AddedStyleImageEvent(this.image);
+class ChangedStyleImageEvent extends AppBlocEvent {
+  final int styleIndex;
+  String customStylePath;
+  ChangedStyleImageEvent(
+      {required this.styleIndex, required this.customStylePath});
 }
