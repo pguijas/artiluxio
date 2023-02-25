@@ -23,7 +23,6 @@ class MainScreen extends StatelessWidget {
   }
 
   Future<List<String>> readLastInferences() async {
-
     Directory dir = await getApplicationDocumentsDirectory();
     Directory inferenceDir = Directory(dir.path + "/inferences/");
     Stream<FileSystemEntity> fileStream = inferenceDir.list();
@@ -61,8 +60,8 @@ class MainScreen extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ImageScreen(
-                    path: images[i], isAssetImage: false)),
+                builder: (context) =>
+                    ImageScreen(path: images[i], isAssetImage: false)),
           );
         }, // Image tapped
         splashColor: Colors.black87,
@@ -103,58 +102,66 @@ class MainScreen extends StatelessWidget {
       ),
 
       // Body
-      body: Column(
-        children: [
-          ///////////////////
-          /// Hello! Text
-          ///////////////////
-          Container(
-            margin: const EdgeInsets.only(left: 20.0, top: 20.0),
-            child: const Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                "Hello!",
-                style: TextStyle(
-                  fontSize: 50,
-                  fontFamily: "Roboto",
+      body: BlocBuilder<AppBloc, AppBlocState>(builder: (context, state) {
+        return Column(
+          children: [
+            ///////////////////
+            /// Hello! Text
+            ///////////////////
+            Container(
+              margin: const EdgeInsets.only(left: 20.0, top: 20.0),
+              child: const Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Hello!",
+                  style: TextStyle(
+                    fontSize: 50,
+                    fontFamily: "Roboto",
+                  ),
                 ),
               ),
             ),
-          ),
 
-          ////////////////////////
-          /// Model Selectior
-          ///////////////////////
-          ModelSelector(isDarkMode: isDarkMode, models: models),
+            ////////////////////////
+            /// Model Selectior
+            ///////////////////////
+            ModelSelector(
+              isDarkMode: isDarkMode,
+              models: models,
+              selectedModel: state.modelIndex,
+              onChanged: (i) =>
+                  BlocProvider.of<AppBloc>(context).add(ChangedModelEvent(i)),
+            ),
 
-          ////////////////////////
-          /// Last Inferences
-          ///////////////////////
-          FutureBuilder<List<String>>(
-              future: lastInferencesFuture,
-              builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
-                List<Widget> children;
-                if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  children = <Widget>[Text("No previous inferences.")];
-                } else {
-                  children = <Widget>[
-                    LastInferences(
-                      imgSize: imgSize,
-                      itemBuilder: itemBuilder,
-                      images: snapshot.data!,
-                    )
-                  ];
-                }
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: children,
-                  ),
-                );
-              }
-          ),
-        ],
-      ),
+            ////////////////////////
+            /// Last Inferences
+            ///////////////////////
+            FutureBuilder<List<String>>(
+                future: lastInferencesFuture,
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<String>> snapshot) {
+                  List<Widget> children;
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    children = <Widget>[Text("No previous inferences.")];
+                  } else {
+                    children = <Widget>[
+                      LastInferences(
+                        imgSize: imgSize,
+                        itemBuilder: itemBuilder,
+                        images: snapshot.data!,
+                      )
+                    ];
+                  }
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: children,
+                    ),
+                  );
+                }),
+          ],
+        );
+      }),
 
       //////////////////////////////
       // Centered Floating Button

@@ -3,9 +3,15 @@ import 'package:flutter/material.dart';
 class ModelSelector extends StatelessWidget {
   final bool isDarkMode;
   final List<String> models;
+  final int selectedModel;
+  final Function(int) onChanged;
 
   const ModelSelector(
-      {required this.isDarkMode, required this.models, super.key});
+      {required this.isDarkMode,
+      required this.models,
+      required this.selectedModel,
+      required this.onChanged,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +45,7 @@ class ModelSelector extends StatelessWidget {
                   : const Color.fromARGB(20, 0, 0, 0)),
           child: DropdownButtonHideUnderline(
               child: DropdownButton(
-                  value: models[0],
+                  value: models[selectedModel],
                   // obtain the value from the bloc
                   items: models
                       .map((e) => DropdownMenuItem(
@@ -49,7 +55,8 @@ class ModelSelector extends StatelessWidget {
                           )))
                       .toList(),
                   onChanged: (value) {
-                    print(value);
+                    // return the index of the selected model
+                    if (value != null) onChanged(models.indexOf(value));
                   }) // your Dropdown Widget here
               ),
         ),

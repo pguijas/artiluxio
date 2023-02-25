@@ -2,18 +2,6 @@ part of 'app_bloc.dart';
 
 abstract class AppBlocEvent {}
 
-/*
-class AddModelEvent extends AppBlocEvent {
-  final String model;
-  AddModelEvent(this.model);
-}
-
-class ModelLoadedEvent extends AppBlocEvent {
-  final String model;
-  ModelLoadedEvent(this.model);
-}
-*/
-
 class RunningInferenceEvent extends AppBlocEvent {}
 
 class InferenceDoneEvent extends AppBlocEvent {
@@ -26,4 +14,9 @@ class ChangedStyleImageEvent extends AppBlocEvent {
   String sourceImagePath;
   ChangedStyleImageEvent(
       {required this.sourceImagePath, required this.styleIndex});
+}
+
+class ChangedModelEvent extends AppBlocEvent {
+  final int modelIndex;
+  ChangedModelEvent(this.modelIndex);
 }

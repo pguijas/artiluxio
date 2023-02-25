@@ -39,7 +39,9 @@ class AppBloc extends Bloc<AppBlocEvent, AppBlocState> {
     _inference(imgPath, pickedFile.path, model);
   }
 
-  AppBloc() : super(AppBlocState(styleIndex: 0, actualInferencePath: "")) {
+  AppBloc()
+      : super(AppBlocState(
+            styleIndex: 0, actualInferencePath: "", modelIndex: 0)) {
     // STYLE IMAGES
     var l = Iterable<int>.generate(25).toList();
     styleImages = l.map((e) => "assets/style_images/style$e.jpg").toList();
@@ -53,7 +55,9 @@ class AppBloc extends Bloc<AppBlocEvent, AppBlocState> {
       switch (event.styleIndex) {
         case 0:
           emit(AppBlocState(
-              styleIndex: event.styleIndex, actualInferencePath: ""));
+              styleIndex: event.styleIndex,
+              actualInferencePath: "",
+              modelIndex: state.modelIndex));
           break;
 
         case 1:
@@ -73,6 +77,7 @@ class AppBloc extends Bloc<AppBlocEvent, AppBlocState> {
       emit(AppBlocState(
           styleIndex: state.styleIndex,
           actualInferencePath: state.actualInferencePath,
+          modelIndex: state.modelIndex,
           runningInference: true));
     });
 
@@ -81,7 +86,17 @@ class AppBloc extends Bloc<AppBlocEvent, AppBlocState> {
       emit(AppBlocState(
           styleIndex: state.styleIndex,
           actualInferencePath: event.inferencePath,
+          modelIndex: state.modelIndex,
           runningInference: false));
+    });
+
+    on<ChangedModelEvent>((event, emit) {
+      print("Changed Model Event");
+      state.model = StyleTransferer(models[event.modelIndex]);
+      emit(AppBlocState(
+          styleIndex: state.styleIndex,
+          actualInferencePath: state.actualInferencePath,
+          modelIndex: event.modelIndex));
     });
   }
 }
