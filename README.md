@@ -3,7 +3,7 @@
 ## An image style transfer application
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 
-This application is used to transfer styles between images, allowing you to create new outputs full of creativity.
+Artistic style transfer involves generating a new image called a pastiche by merging two input images - one that represents the content and another that represents the artistic style. It is one of the most thrilling advancements in deep learning in recent times. This application is used to transfer styles between images, allowing you to create new outputs full of creativity.
 
 ## 🤖 Demo
 
@@ -28,7 +28,7 @@ Once you have the image with the desired style, you can download and share it!
 
 ## 📚 Documentation
 
-It is well known among the AI community that the training, but also the inference, process of AI models is considerably demanding in terms of time and energy consumption. Therefore, we have follow several [Green Software Patterns](https://patterns.greensoftware.foundation/) to increase in some extent the efficiency of our software.
+It is well known among the AI community that the training, but also the inference, process of AI models is considerably demanding in terms of time and energy consumption. Therefore, we have followed several [Green Software Patterns](https://patterns.greensoftware.foundation/) to increase in some extent the efficiency of our software.
 
 1. **Optimize the size of AI/ML models**. We have considered two models for our project, each of one is made up of two modules: one to predict the style features of an image, and another to transform the input image with those features. They consist in the same architecture but using different data types. Specifically, we have tested an image style transfer called [Magenta](https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2). The first version uses float16, consisting in a 4.7Mb of prediction layer and 0.4Mb of style transfer module. The second, which uses int8, weighs 2.8Mb in the case of the prediction module and 0.2Mb in the case of the style transfer module, almost **half** the original size! However, the drawback of the second version is that it cannot be run on the GPU, so some tests should be launched to check whether the size of the model or the speed is preferable.
 
@@ -44,6 +44,8 @@ It is well known among the AI community that the training, but also the inferenc
 
 7. **Adopt serverless architecture for AI/ML workload processes**. All the steps performed by our application are entirely done in the final device, so the computing resources are specifically optimized to only consume what they need in that moment.
 
+8. **Cache data**. The inference process of the model is the most demanding step of our pipeline. In order to minimize the waiting time for the result, we cache the results so they can be visualized later instantly without the need for re-computation.
+
 ## 📥 Installation
 
 [Initial setup](https://pub.dev/packages/tflite_flutter) - Add TensorFlow Lite dynamic libraries to your app.
@@ -58,6 +60,7 @@ flutter run
 
 [GNU General Public License, Version 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
+[Magenta model](https://github.com/magenta/magenta) --> Apache-2.0
 [cupertino_icons](https://pub.dev/packages/cupertino_icons/license) --> The MIT License \
 [flutter_bloc](https://pub.dev/packages/flutter_bloc) --> The MIT License \
 [image_picker](https://pub.dev/packages/image_picker/license) --> Apache-2.0, BSD-3-Clause \
