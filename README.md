@@ -80,6 +80,12 @@ One of the main purposes is the inclusion of new models optimized for mobile as 
 
 Finally, it is worth highlighting that it has been initially promoted using the students' communication channels, trying to encourage the use and collaboration in the project.
 
+## 👫 Contributing
+
+Since it is an open source project, contributions are always welcome.
+
+See `CONTRIBUTING.md` for ways to get started. And please, respect the code of conduct for this project specified in `CODE_OF_CONDUCT.md`.
+
 ## 📈 Future work
 
 As mentioned, the current version only allows image processing using two small models locally. However, there will be multiple lines of future work, among which the following stand out:
