@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:image/image.dart' as img;
 import 'package:tflite_flutter/tflite_flutter.dart';
+import 'package:path/path.dart';
 
 class StyleTransferer {
 
@@ -53,7 +55,12 @@ class StyleTransferer {
     return transformed;
   }
 
-  Future<void> transfer(img.Image input, img.Image style) async {
+  Future<String> transfer(File inputFile, File styleFile) async {
+
+    print("Reading images from system...");
+    img.Image input = img.decodeImage(inputFile.readAsBytesSync())!;
+    img.Image style = img.decodeImage(styleFile.readAsBytesSync())!;
+    print("Input and style images read.");
 
     print("Preprocessing inputs...");
     img.Image processedInput = _preprocess(input, _inputImageSize, _inputImageSize);
@@ -80,9 +87,13 @@ class StyleTransferer {
     outputImage = img.copyResize(outputImage, width: input.width, height: input.height);
     print("Conversion finished.");
 
-    print("Saving results...");
-    String outputFile = OUTPUT_FOLDER + "output.jpg";
+    String inputName = basename(inputFile.path).split(".")[0];
+    String styleName = basename(styleFile.path).split(".")[0];
+    String outputFile = OUTPUT_FOLDER + inputName + "_" + styleName + ".jpg";
+    print("Saving results to $outputFile...");
     await img.encodeImageFile(outputFile, outputImage);
+
+    return outputFile;
   }
 
   img.Image _convertArrayToImage(List<dynamic> imageArray, int inputSize) {
