@@ -9,11 +9,12 @@ class InferenceScreen extends StatelessWidget {
 
   void _inference(BuildContext context) async {
     File inputFile = File(imgPath);
-    File styleFile = File("/storage/emulated/0/Downloads/picasso.jpg");
+    File styleFile = File("/storage/emulated/0/Download/picasso.jpg");
     StyleTransferer styleTransferer = StyleTransferer("magenta", "fp16");
+    await styleTransferer.loadModel();
     String output = await styleTransferer.transfer(inputFile, styleFile);
     imgPath = output;
-    
+
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => InferenceScreen(imgPath)),

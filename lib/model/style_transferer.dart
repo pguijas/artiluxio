@@ -31,10 +31,9 @@ class StyleTransferer {
     name = modelName + "_" + precision;
     _stylePredictor = MODELS_FOLDER + name + "_prediction.tflite";
     _styleTransformer = MODELS_FOLDER + name + "_transfer.tflite";
-    _loadModel();
   }
 
-  void _loadModel() async {
+  Future<void> loadModel() async {
     _predictorInterpreter = await Interpreter.fromAsset(_stylePredictor);
     _transformerInterpreter = await Interpreter.fromAsset(_styleTransformer);
     print('Interpreters loaded successfully');
