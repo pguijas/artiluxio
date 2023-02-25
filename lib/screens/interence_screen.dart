@@ -6,16 +6,19 @@ import '../bloc/app_bloc.dart';
 
 
 class InferenceScreen extends StatelessWidget {
-  String imgPath;
+  String originalImagePath;
+  String? imgPath;
   AppBloc appBloc;
   final double imgSize = 110.0;
 
-  InferenceScreen(this.imgPath, this.appBloc, {super.key});
+  InferenceScreen(this.originalImagePath, this.appBloc, {super.key});
 
   Widget itembluider(List<String> styleImages, int i) {
     return InkWell(
         onTap: () {
-          print("miau");
+          String stylePath = styleImages[i];
+          print("Selected style: $stylePath");
+          _inference(stylePath);
         }, // Image tapped
         splashColor: Colors.black87,
         child: ClipRRect(
@@ -28,18 +31,14 @@ class InferenceScreen extends StatelessWidget {
             )));
   }
 
-  void _inference(BuildContext context) async {
-    File inputFile = File(imgPath);
-    File styleFile = File("/storage/emulated/0/Download/picasso.jpg");
-    StyleTransferer styleTransferer = StyleTransferer("magenta", "fp16");
+  void _inference(String stylePath) async {
+
+    File inputFile = File(originalImagePath);
+    File styleFile = File(stylePath);
+    StyleTransferer styleTransferer = StyleTransferer("magenta", "fp16");  // inicializarlo al principio
     await styleTransferer.loadModel();
     String output = await styleTransferer.transfer(inputFile, styleFile);
     imgPath = output;
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => InferenceScreen(imgPath)),
-    );
   }
 
   @override
@@ -75,18 +74,20 @@ class InferenceScreen extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: Image(
-                image: Image.file(File(imgPath)).image,
+                image: Image.file(File(imgPath == null ? originalImagePath : imgPath!)).image,
                 height: 500,
                 width: 350,
                 fit: BoxFit.cover,
               ),
             ),
           ),
+          /*
           FloatingActionButton(
             onPressed: () {_inference(context); },
             tooltip: 'Increment',
             child: const Icon(Icons.adb),
           ),
+           */
           Container(
             margin: const EdgeInsets.only(top: 40.0),
             child: SizedBox(
@@ -101,7 +102,6 @@ class InferenceScreen extends StatelessWidget {
             ),
           ),
 
-          //
         ],
       ),
     );

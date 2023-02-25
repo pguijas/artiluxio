@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import '../bloc/app_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 /*
 Main Screen Content:
@@ -23,8 +25,22 @@ class MainScreen extends StatelessWidget {
   final String title = "ArtiLuxio";
   final double imgSize = 125.0;
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
+  late List<String> lastInferences = [];
 
-  MainScreen({super.key});
+  MainScreen() {
+    readLastInferences();
+  }
+
+  void readLastInferences() async {
+    Directory dir = await getApplicationDocumentsDirectory();
+    Directory inferenceDir = Directory(dir.path + "/inferences/");
+    Stream<FileSystemEntity> fileStream = inferenceDir.list();
+
+    await for (FileSystemEntity file in fileStream) {
+      print(file.path);
+      lastInferences.add(file.path);
+    }
+  }
 
   void goInference(BuildContext context, String imgPath) {
     AppBloc appBloc = BlocProvider.of<AppBloc>(context);
@@ -51,14 +67,14 @@ class MainScreen extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) => ImageScreen(
-                    path: 'assets/images/example.jpg', isAssetImage: true)),
+                    path: lastInferences[i], isAssetImage: true)),
           );
         }, // Image tapped
         splashColor: Colors.black87,
         child: ClipRRect(
             borderRadius: BorderRadius.circular(2),
             child: Ink.image(
-              image: const AssetImage('assets/images/example.jpg'),
+              image: AssetImage(lastInferences[i]),
               height: imgSize,
               width: imgSize,
               fit: BoxFit.cover,
@@ -173,7 +189,7 @@ class MainScreen extends StatelessWidget {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.all(0),
-              itemCount: 10,
+              itemCount: lastInferences.length,
               itemBuilder: (_, i) => itembluider(context, i),
               separatorBuilder: (_, i) => const SizedBox(width: 10),
             ),

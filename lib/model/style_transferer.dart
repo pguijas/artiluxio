@@ -3,14 +3,16 @@ import 'dart:typed_data';
 import 'package:image/image.dart' as img;
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class StyleTransferer {
 
-  // System folder where to save the results
-  final OUTPUT_FOLDER = "/storage/emulated/0/Download/";
-
   // Assets folder with the .tflite files
   final MODELS_FOLDER = "models/";
+
+  // System folder where to save the results
+  late String outputFolder;
 
   // tflite models to be used
   late final String _stylePredictor;
@@ -44,6 +46,8 @@ class StyleTransferer {
     _featuresStylizedSize = _predictorInterpreter.getOutputTensor(0).shape[3];
     print("Predictor (input, output) resolution: ($_styleImageSize, $_featuresStylizedSize)");
     print("Transformer (input, output) resolution: ($_inputImageSize, $_inputImageSize)");
+
+    outputFolder = (await getApplicationDocumentsDirectory()).path + "/inferences/";
   }
 
   img.Image _preprocess(img.Image image, height, width) {
@@ -61,7 +65,7 @@ class StyleTransferer {
 
     String inputName = basename(inputFile.path).split(".")[0];
     String styleName = basename(styleFile.path).split(".")[0];
-    String outputFile = OUTPUT_FOLDER + inputName + "_" + styleName + "_" + name + ".jpg";
+    String outputFile = outputFolder + inputName + "_" + styleName + "_" + name + ".jpg";
 
     // Cache: do not compute again the result if it already exists in the output folder
     if (await File(outputFile).exists()) {
@@ -70,8 +74,15 @@ class StyleTransferer {
     }
 
     print("Reading images from system...");
+    img.Image? style;
+    if (! await styleFile.exists()) {
+      ByteData styleBytes = await rootBundle.load(styleFile.path);
+      Uint8List styleUint8 = styleBytes.buffer.asUint8List();
+      style = img.decodeImage(styleUint8)!;
+    } else {
+      style = img.decodeImage(styleFile.readAsBytesSync())!;
+    }
     img.Image input = img.decodeImage(inputFile.readAsBytesSync())!;
-    img.Image style = img.decodeImage(styleFile.readAsBytesSync())!;
     print("Input and style images read.");
 
     print("Preprocessing inputs...");
