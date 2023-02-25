@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 class LastInferences extends StatelessWidget {
   final double imgSize;
-  final Widget Function(BuildContext, int) itemBuilder;
+  final Widget Function(BuildContext, int, List<String>) itemBuilder;
+  final List<String> images;
 
   const LastInferences(
-      {required this.imgSize, required this.itemBuilder, super.key});
+      {required this.imgSize, required this.itemBuilder, required this.images, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +31,8 @@ class LastInferences extends StatelessWidget {
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.all(0),
-            itemCount: 10,
-            itemBuilder: (_, i) => itemBuilder(context, i),
+            itemCount: images.length,
+            itemBuilder: (_, i) => itemBuilder(context, i, images),
             separatorBuilder: (_, i) => const SizedBox(width: 10),
           ),
         ),

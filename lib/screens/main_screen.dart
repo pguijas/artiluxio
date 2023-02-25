@@ -6,8 +6,9 @@ import 'package:artiluxio/screens/widgets/last_inferences.dart';
 import 'package:artiluxio/screens/widgets/model_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import '../bloc/app_bloc.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'dart:io';
 
 class MainScreen extends StatelessWidget {
   // Atributes
@@ -15,7 +16,25 @@ class MainScreen extends StatelessWidget {
   final double imgSize = 125.0;
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
 
-  MainScreen({super.key});
+  late Future<List<String>> lastInferencesFuture;
+
+  MainScreen() {
+    lastInferencesFuture = readLastInferences();
+  }
+
+  Future<List<String>> readLastInferences() async {
+
+    Directory dir = await getApplicationDocumentsDirectory();
+    Directory inferenceDir = Directory(dir.path + "/inferences/");
+    Stream<FileSystemEntity> fileStream = inferenceDir.list();
+
+    List<String> lastInferences = [];
+    await for (FileSystemEntity file in fileStream) {
+      lastInferences.add(file.path);
+    }
+
+    return lastInferences;
+  }
 
   // goInference Callback
   void goInference(BuildContext context, String imgPath) {
@@ -36,21 +55,21 @@ class MainScreen extends StatelessWidget {
   }
 
   // itemBuilder Generator (last inferences)
-  Widget itemBuilder(BuildContext context, int i) {
+  Widget itemBuilder(BuildContext context, int i, List<String> images) {
     return InkWell(
         onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => ImageScreen(
-                    path: 'assets/images/example.jpg', isAssetImage: true)),
+                    path: images[i], isAssetImage: false)),
           );
         }, // Image tapped
         splashColor: Colors.black87,
         child: ClipRRect(
             borderRadius: BorderRadius.circular(2),
             child: Ink.image(
-              image: const AssetImage('assets/images/example.jpg'),
+              image: FileImage(File(images[i])),
               height: imgSize,
               width: imgSize,
               fit: BoxFit.cover,
@@ -111,10 +130,29 @@ class MainScreen extends StatelessWidget {
           ////////////////////////
           /// Last Inferences
           ///////////////////////
-          LastInferences(
-            imgSize: imgSize,
-            itemBuilder: itemBuilder,
-          )
+          FutureBuilder<List<String>>(
+              future: lastInferencesFuture,
+              builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+                List<Widget> children;
+                if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  children = <Widget>[Text("No previous inferences.")];
+                } else {
+                  children = <Widget>[
+                    LastInferences(
+                      imgSize: imgSize,
+                      itemBuilder: itemBuilder,
+                      images: snapshot.data!,
+                    )
+                  ];
+                }
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: children,
+                  ),
+                );
+              }
+          ),
         ],
       ),
 
