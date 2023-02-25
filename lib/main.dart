@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
     ]);
 
+    // Main app
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',

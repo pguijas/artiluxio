@@ -3,10 +3,30 @@
 ## An image style transfer application
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 
-Add a brief description here?
+This application is used to transfer styles between images, allowing you to create new outputs full of creativity.
+
+## 🤖 Demo
+
+<p align="center">
+ <img src="demo.gif" width='200'/>
+</p>
+
+## 🫳🏼 Usage
+
+The application is oriented to be easy to use.
+When you open the application you will see the main screen where you can create a new inference from the camera or a selected image from the gallery.
+You will also be able to see the last created inferences and the available models.
+
+When you have the desired image, a second screen will appear where you can apply the models mentioned above, you can also upload a new model or reset the image.
+
+Once you have the image with the desired style, you can download and share it! 
+
+## ✅ Highlights
+
+- A simply way to improve creativity.
+- Art generator.
 
 ## 📚 Documentation
-
 
 It is well known among the AI community that the training, but also the inference, process of AI models is considerably demanding in terms of time and energy consumption. Therefore, we have follow several [Green Software Patterns](https://patterns.greensoftware.foundation/) to increase in some extent the efficiency of our software.
 
@@ -24,21 +44,6 @@ It is well known among the AI community that the training, but also the inferenc
 
 7. **Adopt serverless architecture for AI/ML workload processes**. All the steps performed by our application are entirely done in the final device, so the computing resources are specifically optimized to only consume what they need in that moment.
 
-## ✅ Highlights
-
-- A simply way to improve creativity.
-- Art generator.
-
-## 🤖 Usage
-
-The application is oriented to be easy to use.
-When you open the application you will see the main screen where you can create a new inference from the camera or a selected image from the gallery.
-You will also be able to see the last created inferences and the available models.
-
-When you have the desired image, a second screen will appear where you can apply the models mentioned above, you can also upload a new model or reset the image.
-
-Once you have the image with the desired style, you can download and share it! 
-
 ## 📥 Installation
 
 [Initial setup](https://pub.dev/packages/tflite_flutter) - Add TensorFlow Lite dynamic libraries to your app.
@@ -49,6 +54,16 @@ flutter pub get
 flutter run
 ```
 
-## 📜 License
+## 📜 Licenses
 
 [GNU General Public License, Version 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
+
+[cupertino_icons](https://pub.dev/packages/cupertino_icons/license) --> The MIT License \
+[flutter_bloc](https://pub.dev/packages/flutter_bloc) --> The MIT License \
+[image_picker](https://pub.dev/packages/image_picker/license) --> Apache-2.0, BSD-3-Clause \
+[flutter_speed_dial](https://pub.dev/packages/flutter_speed_dial) --> The MIT License \
+[tflite_flutter](https://pub.dev/packages/tflite_flutter) --> Apache-2.0 \
+[photo_view](https://pub.dev/packages/photo_view) --> The MIT License \
+[share_plus](https://pub.dev/packages/share_plus/license) --> BSD-3-Clause \
+[flutter_lints](https://pub.dev/packages/flutter_lints) --> BSD-3-Clause \
+[roboto font](https://github.com/googlefonts/roboto) --> Apache-2.0 

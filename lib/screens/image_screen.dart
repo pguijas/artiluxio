@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:photo_view/photo_view.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ImageScreen extends StatelessWidget {
-  ImageProvider image = const AssetImage('assets/images/example.png');
+  late ImageProvider image;
   final String path;
 
-  ImageScreen({required bool isAssetImage, required this.path, super.key}) {
-    if (isAssetImage) {
-      image = AssetImage(path);
-    } else {
-      image = FileImage(File(path));
-    }
+  ImageScreen({required this.path, super.key}) {
+    image = FileImage(File(path));
   }
 
   @override
@@ -32,7 +29,8 @@ class ImageScreen extends StatelessWidget {
         actions: [
           IconButton(
               icon: const Icon(Icons.share),
-              onPressed: () => print("probar con share_extend"))
+              onPressed: () =>
+                  Share.shareFiles([path], text: 'Look at this cool image!')),
         ],
       ),
       body: PhotoView(imageProvider: image),
