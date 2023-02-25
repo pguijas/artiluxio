@@ -105,7 +105,12 @@ class HelpScreen extends StatelessWidget {
           child: const Align(
             alignment: Alignment.topLeft,
             child: Text(
-              ":P",
+              "This app has been designed trying to reduce its energy consumption as much as possible."
+              "We have not performed eternal training steps, but draw on the already pre-trained"
+              "Magenta style transfer model. This is a very efficient model whose spend less than 5Mb."
+              "We do not require cloud operations or data transfer over the network. We draw on efficient"
+              " file formats and frameworks such as .tflite and C++. Also, a cache system is implemented "
+              "to avoid performing unnecessary operations on images already transformed.",
               style: TextStyle(
                 fontSize: 15,
                 fontFamily: "Roboto",
