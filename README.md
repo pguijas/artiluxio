@@ -60,7 +60,11 @@ flutter run
 
 [GNU General Public License, Version 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
-[Magenta model](https://github.com/magenta/magenta) --> Apache-2.0
+Multiple licences have been taken into account, such as Berkeley Software Distribution (BSD), Massachusetts Institute of Technology (MIT) or Apache, but the licence used in this project is GNU General Public License v3 (GPLv3). The main reason for choosing GPLv3 was that it is somewhat more restrictive than the other candidates. Also, one of its most important points is that it is a copyleft licence,
+i.e. it is required to preserve the same freedoms on copying and derivatives. In addition, it should be noted that GPLv3 is compatible with the licences of the libraries and tools used, which are indicated below.
+
+
+[Magenta model](https://github.com/magenta/magenta) --> Apache-2.0 \
 [cupertino_icons](https://pub.dev/packages/cupertino_icons/license) --> The MIT License \
 [flutter_bloc](https://pub.dev/packages/flutter_bloc) --> The MIT License \
 [image_picker](https://pub.dev/packages/image_picker/license) --> Apache-2.0, BSD-3-Clause \
