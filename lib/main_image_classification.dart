@@ -3,7 +3,7 @@ import 'package:image/image.dart' as img;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'classifier.dart';
+import 'style_transferer.dart';
 
 import 'package:flutter/material.dart';
 
@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
   File? _styleImage;
   File? _outputImage;
 
-  Classifier classifier = Classifier();
+  StyleTransferer? styleTransferer;
 
   @override
   void initState() {
@@ -69,16 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
     main();
   }
   void main() async {
-
-    /*
-    if (! await Permission.storage.isGranted) {
-      await Permission.storage.request();
-    }
-
-    if (! await Permission.manageExternalStorage.isGranted) {
-      await Permission.manageExternalStorage.request();
-    }
-    */
+    styleTransferer = StyleTransferer("magenta", "int8");
   }
 
   void _getInputImage() async {
@@ -87,6 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() {
       _inputImage = File(pickedFile!.path);
+      _outputImage = null;
     });
   }
 
@@ -96,6 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() {
       _styleImage = File(pickedFile!.path);
+      _outputImage = null;
     });
   }
 
@@ -113,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     img.Image input = img.decodeImage(_inputImage!.readAsBytesSync())!;
     img.Image style = img.decodeImage(_styleImage!.readAsBytesSync())!;
-    await classifier.transfer(input, style);
+    await styleTransferer!.transfer(input, style);
     setState(() {
       _inputImage = null;
       _styleImage = null;
