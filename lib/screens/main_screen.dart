@@ -1,8 +1,10 @@
 import 'package:artiluxio/screens/help_screen.dart';
 import 'package:artiluxio/screens/image_screen.dart';
+import 'package:artiluxio/screens/interence_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../bloc/app_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import '../bloc/app_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 /*
@@ -20,8 +22,18 @@ AQUI VA  ATOCAR DIVIDIR TODO EN COMPONENTES
 class MainScreen extends StatelessWidget {
   final String title = "ArtiLuxio";
   final double imgSize = 125.0;
+  ValueNotifier<bool> isDialOpen = ValueNotifier(false);
 
-  const MainScreen({super.key});
+  MainScreen({super.key});
+
+  void goInference(BuildContext context, String imgPath) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => InferenceScreen(imgPath)),
+    );
+  }
+
+  //_onImageButtonPressed(ImageSource.gallery, context: context);
 
   void goToSettings(BuildContext context) {
     Navigator.push(
@@ -188,17 +200,26 @@ class MainScreen extends StatelessWidget {
         spacing: 10,
         spaceBetweenChildren: 10,
         switchLabelPosition: true,
-        // center the children
+        openCloseDial: isDialOpen,
+
         children: [
           SpeedDialChild(
             child: const Icon(Icons.camera_alt),
             label: "Camera",
-            onTap: () => print('Falta implementar :P'),
+            onTap: () {
+              BlocProvider.of<AppBloc>(context)
+                  .getInputImage(true, context, goInference);
+              isDialOpen.value = false;
+            },
           ),
           SpeedDialChild(
             child: const Icon(Icons.add_photo_alternate),
             label: "Gallery",
-            onTap: () => print('Falta implementar :P'),
+            onTap: () {
+              BlocProvider.of<AppBloc>(context)
+                  .getInputImage(false, context, goInference);
+              isDialOpen.value = false;
+            },
           ),
         ],
       ),

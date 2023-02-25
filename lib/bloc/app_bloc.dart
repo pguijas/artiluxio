@@ -5,6 +5,15 @@ part 'app_bloc_state.dart';
 
 class AppBloc extends Bloc<AppBlocEvent, AppBlocState> {
   List<String> models = ["example.tflite"];
+  final picker = ImagePicker();
+
+  void getInputImage(fromCam, context, callback) async {
+    ImageSource source = fromCam ? ImageSource.camera : ImageSource.gallery;
+    final pickedFile = await picker.pickImage(source: source);
+    if (pickedFile == null) return;
+    print("Image Path: ${pickedFile.path}");
+    callback(context, pickedFile.path);
+  }
 
   AppBloc() : super(AppBlocInitial()) {
     // MODEL LOADED
