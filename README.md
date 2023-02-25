@@ -1,5 +1,5 @@
 ![Logo](https://user-images.githubusercontent.com/53833717/221363833-8f73ec79-bfe4-4144-961f-e2a950a24254.png)
-# **Artiluxio**
+# **artiluxio**
 ## An image style transfer application
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
@@ -48,7 +48,7 @@ It is well known among the AI community that the training, but also the inferenc
 
 ## 📥 Installation
 
-[Initial setup](https://pub.dev/packages/tflite_flutter) - Add TensorFlow Lite dynamic libraries to your app.
+Please take a minute to read the [TensorFlow Lite Flutter Plugin](https://pub.dev/packages/tflite_flutter) page to add TensorFlow Lite dynamic libraries to your app.
 
 Desktop
 ```
