@@ -5,13 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/app_bloc.dart';
 
 class InferenceScreen extends StatelessWidget {
+  // Atributes
   String imgPath;
   AppBloc appBloc;
   final double imgSize = 110.0;
 
   InferenceScreen(this.imgPath, this.appBloc, {super.key});
 
-  Widget itembluider(List<String> styleImages, int i, int sel_i,
+  // Image Style Builder
+  Widget itembluider(List<String> styleImages, int i, int selIndex,
       bool isDarkMode, Color borderColor) {
     Widget res;
     switch (i) {
@@ -75,7 +77,7 @@ class InferenceScreen extends StatelessWidget {
         break;
     }
 
-    if (i == sel_i) {
+    if (i == selIndex) {
       return Container(
         height: imgSize,
         width: imgSize,
@@ -91,7 +93,6 @@ class InferenceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> styleImages = appBloc.styleImages;
-
     bool isDarkMode =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
 
@@ -129,7 +130,9 @@ class InferenceScreen extends StatelessWidget {
             ),
             body: Column(
               children: [
-                // rounded container
+                //////////////////
+                // Result Image
+                //////////////////
                 Container(
                   width: double.infinity,
                   height: 500,
@@ -139,6 +142,9 @@ class InferenceScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20.0), child: image),
                 ),
 
+                //////////////////
+                /// Style Images
+                //////////////////
                 Container(
                   margin: const EdgeInsets.only(top: 35.0),
                   child: SizedBox(
@@ -158,8 +164,6 @@ class InferenceScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                //
               ],
             ),
           );

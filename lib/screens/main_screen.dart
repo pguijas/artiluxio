@@ -16,15 +16,15 @@ class MainScreen extends StatelessWidget {
   final double imgSize = 125.0;
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
 
-  late Future<List<String>> lastInferencesFuture;
-
-  MainScreen() {
+  MainScreen({super.key}) {
     lastInferencesFuture = readLastInferences();
   }
 
+  // Read last inferences
+  late Future<List<String>> lastInferencesFuture;
   Future<List<String>> readLastInferences() async {
     Directory dir = await getApplicationDocumentsDirectory();
-    Directory inferenceDir = Directory(dir.path + "/inferences/");
+    Directory inferenceDir = Directory("${dir.path}/inferences/");
     Stream<FileSystemEntity> fileStream = inferenceDir.list();
 
     List<String> lastInferences = [];
@@ -60,8 +60,7 @@ class MainScreen extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    ImageScreen(path: images[i], isAssetImage: false)),
+                builder: (context) => ImageScreen(path: images[i])),
           );
         }, // Image tapped
         splashColor: Colors.black87,
