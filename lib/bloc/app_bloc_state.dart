@@ -2,11 +2,12 @@ part of 'app_bloc.dart';
 
 class AppBlocState {
   int styleIndex = 0;
-  String customStylePath = "";
   String actualInferencePath = "";
+  bool runningInference = false;
+  StyleTransferer model = StyleTransferer("magenta", "fp16");
 
   AppBlocState(
       {required this.styleIndex,
-      required this.customStylePath,
-      required this.actualInferencePath});
+      required this.actualInferencePath,
+      this.runningInference = false});
 }

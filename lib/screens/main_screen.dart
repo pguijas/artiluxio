@@ -1,6 +1,6 @@
 import 'package:artiluxio/screens/help_screen.dart';
 import 'package:artiluxio/screens/image_screen.dart';
-import 'package:artiluxio/screens/interence_screen.dart';
+import 'package:artiluxio/screens/inference_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';

@@ -2,33 +2,33 @@ PODS:
   - Flutter (1.0.0)
   - image_picker_ios (0.0.1):
     - Flutter
-  - TensorFlowLite (1.13.1)
-  - tflite (1.0.6):
+  - path_provider_foundation (0.0.1):
     - Flutter
-    - TensorFlowLite
+    - FlutterMacOS
+  - tflite_flutter (0.1.0):
+    - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
-  - tflite (from `.symlinks/plugins/tflite/ios`)
-
-SPEC REPOS:
-  trunk:
-    - TensorFlowLite
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
+  - tflite_flutter (from `.symlinks/plugins/tflite_flutter/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
-  tflite:
-    :path: ".symlinks/plugins/tflite/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/ios"
+  tflite_flutter:
+    :path: ".symlinks/plugins/tflite_flutter/ios"
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   image_picker_ios: 58b9c4269cb176f89acea5e5d043c9358f2d25f8
-  TensorFlowLite: 8b9dc4eb32eac0f8cb660c66bca7604da56dcc5a
-  tflite: 487522100c94a00c227074f4f1cd5372c75ba961
+  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
+  tflite_flutter: 9157a660578930a99728974f247369af1c3595d5
 
 PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
 
