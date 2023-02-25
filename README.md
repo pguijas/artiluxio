@@ -2,6 +2,8 @@
 # **Artiluxio**
 ## An image style transfer application
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 
 This application is used to transfer styles between images, allowing you to create new outputs full of creativity.
 
@@ -57,6 +59,8 @@ flutter run
 ## 📜 Licenses
 
 [GNU General Public License, Version 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
+
+The libraries used in this project use the following licenses:
 
 [cupertino_icons](https://pub.dev/packages/cupertino_icons/license) --> The MIT License \
 [flutter_bloc](https://pub.dev/packages/flutter_bloc) --> The MIT License \
