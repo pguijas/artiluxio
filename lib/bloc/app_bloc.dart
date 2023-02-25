@@ -7,7 +7,7 @@ part 'app_bloc_event.dart';
 part 'app_bloc_state.dart';
 
 class AppBloc extends Bloc<AppBlocEvent, AppBlocState> {
-  List<String> models = ["example.tflite"];
+  List<String> models = ["magenta_fp16", "magenta_int8"];
   List<String> styleImages = [];
 
   final picker = ImagePicker();

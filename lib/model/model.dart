@@ -31,8 +31,9 @@ class StyleTransferer {
 
   late String name;
 
-  StyleTransferer(String modelName, String precision) {
-    name = modelName + "_" + precision;
+  StyleTransferer(String name) {
+    print("Loading model: $name");
+    name = "magenta" + "_" + "fp16";
     _stylePredictor = MODELS_FOLDER + name + "_prediction.tflite";
     _styleTransformer = MODELS_FOLDER + name + "_transfer.tflite";
   }
@@ -68,6 +69,12 @@ class StyleTransferer {
   }
 
   Future<String> transfer(File inputFile, File styleFile) async {
+    if (notLoaded) {
+      print("Model not loaded, llamandolo antes de cargarlo");
+    }
+    print("------Name: $name");
+    //if (name =)
+
     String inputName = basename(inputFile.path).split(".")[0];
     String styleName = basename(styleFile.path).split(".")[0];
     String outputFile =

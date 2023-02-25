@@ -4,7 +4,7 @@ class AppBlocState {
   int styleIndex = 0;
   String actualInferencePath = "";
   bool runningInference = false;
-  StyleTransferer model = StyleTransferer("magenta", "fp16");
+  StyleTransferer model = StyleTransferer("magenta_fp16");
 
   AppBlocState(
       {required this.styleIndex,
