@@ -25,34 +25,25 @@ class MainScreen extends StatelessWidget {
   final String title = "ArtiLuxio";
   final double imgSize = 125.0;
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
-  late List<String> lastInferences = [];
+  
+  late Future<List<String>> lastInferencesFuture;
 
   MainScreen() {
-    readLastInferences();
+    lastInferencesFuture = readLastInferences();
   }
 
-  Future<bool> readLastInferences() async {
-    lastInferences = [];
+  Future<List<String>> readLastInferences() async {
 
     Directory dir = await getApplicationDocumentsDirectory();
     Directory inferenceDir = Directory(dir.path + "/inferences/");
     Stream<FileSystemEntity> fileStream = inferenceDir.list();
 
-    // Bug: this function is executed multiple times, so the list contains
-    // repeated list of elements. We use idx to overwrite the (same) image if
-    // it already exists, otherwise the element is appended to the end
-    int idx = 0;
+    List<String> lastInferences = [];
     await for (FileSystemEntity file in fileStream) {
-      //file.deleteSync(recursive: true);  // to clean the folder
-      if (idx >= lastInferences.length) {
-        lastInferences.add(file.path);
-      } else {
-        lastInferences[idx] = file.path;
-      }
-      idx += 1;
+      lastInferences.add(file.path);
     }
 
-    return true;
+    return lastInferences;
   }
 
   void goInference(BuildContext context, String imgPath) {
@@ -73,21 +64,21 @@ class MainScreen extends StatelessWidget {
     );
   }
 
-  Widget itembluider(BuildContext context, int i) {
+  Widget itembluider(BuildContext context, int i, List<String> images) {
     return InkWell(
         onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => ImageScreen(
-                    path: lastInferences[i], isAssetImage: true)),
+                    path: images[i], isAssetImage: false)),
           );
         }, // Image tapped
         splashColor: Colors.black87,
         child: ClipRRect(
             borderRadius: BorderRadius.circular(2),
             child: Ink.image(
-              image: FileImage(File(lastInferences[i])),
+              image: FileImage(File(images[i])),
               height: imgSize,
               width: imgSize,
               fit: BoxFit.cover,
@@ -197,11 +188,11 @@ class MainScreen extends StatelessWidget {
               )),
 
           // Last Inferences Scrollable
-          FutureBuilder<bool>(
-            future: readLastInferences(),
-              builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          FutureBuilder<List<String>>(
+            future: lastInferencesFuture,
+              builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
                 List<Widget> children;
-                if (!snapshot.hasData || lastInferences.length == 0) {
+                if (!snapshot.hasData || snapshot.data!.isEmpty) {
                   children = <Widget>[Text("No previous inferences.")];
                 } else {
                   children = <Widget>[
@@ -210,8 +201,8 @@ class MainScreen extends StatelessWidget {
                       child: ListView.separated(
                         scrollDirection: Axis.horizontal,
                         padding: const EdgeInsets.all(0),
-                        itemCount: lastInferences.length,
-                        itemBuilder: (_, i) => itembluider(context, i),
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (_, i) => itembluider(context, i, snapshot.data!),
                         separatorBuilder: (_, i) => const SizedBox(width: 10),
                       ),
                     ),
