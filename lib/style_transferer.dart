@@ -25,9 +25,12 @@ class StyleTransferer {
   late final int _styleImageSize;
   late final int _featuresStylizedSize;
 
+  late String name;
+
   StyleTransferer(String modelName, String precision) {
-    _stylePredictor = MODELS_FOLDER + modelName + "_" + precision + "_prediction.tflite";
-    _styleTransformer = MODELS_FOLDER + modelName + "_" + precision + "_transfer.tflite";
+    name = modelName + "_" + precision;
+    _stylePredictor = MODELS_FOLDER + name + "_prediction.tflite";
+    _styleTransformer = MODELS_FOLDER + name + "_transfer.tflite";
     _loadModel();
   }
 
@@ -56,6 +59,16 @@ class StyleTransferer {
   }
 
   Future<String> transfer(File inputFile, File styleFile) async {
+
+    String inputName = basename(inputFile.path).split(".")[0];
+    String styleName = basename(styleFile.path).split(".")[0];
+    String outputFile = OUTPUT_FOLDER + inputName + "_" + styleName + "_" + name + ".jpg";
+
+    // Cache: do not compute again the result if it already exists in the output folder
+    if (await File(outputFile).exists()) {
+      print("Restoring output from previous inference.");
+      return outputFile;
+    }
 
     print("Reading images from system...");
     img.Image input = img.decodeImage(inputFile.readAsBytesSync())!;
@@ -87,9 +100,6 @@ class StyleTransferer {
     outputImage = img.copyResize(outputImage, width: input.width, height: input.height);
     print("Conversion finished.");
 
-    String inputName = basename(inputFile.path).split(".")[0];
-    String styleName = basename(styleFile.path).split(".")[0];
-    String outputFile = OUTPUT_FOLDER + inputName + "_" + styleName + ".jpg";
     print("Saving results to $outputFile...");
     await img.encodeImageFile(outputFile, outputImage);
 
