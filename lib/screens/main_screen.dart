@@ -27,9 +27,11 @@ class MainScreen extends StatelessWidget {
   MainScreen({super.key});
 
   void goInference(BuildContext context, String imgPath) {
+    AppBloc appBloc = BlocProvider.of<AppBloc>(context);
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => InferenceScreen(imgPath)),
+      MaterialPageRoute(
+          builder: (context) => InferenceScreen(imgPath, appBloc)),
     );
   }
 

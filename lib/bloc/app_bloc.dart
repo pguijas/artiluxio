@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 part 'app_bloc_event.dart';
@@ -5,6 +8,8 @@ part 'app_bloc_state.dart';
 
 class AppBloc extends Bloc<AppBlocEvent, AppBlocState> {
   List<String> models = ["example.tflite"];
+  List<String> styleImages = [];
+
   final picker = ImagePicker();
 
   void getInputImage(fromCam, context, callback) async {
@@ -16,6 +21,10 @@ class AppBloc extends Bloc<AppBlocEvent, AppBlocState> {
   }
 
   AppBloc() : super(AppBlocInitial()) {
+    // STYLE IMAGES
+    var l = Iterable<int>.generate(25).toList();
+    styleImages = l.map((e) => "assets/style_images/style$e.jpg").toList();
+
     // MODEL LOADED
     on<ModelLoadedEvent>((event, emit) {
       print("Model Loaded Event");
