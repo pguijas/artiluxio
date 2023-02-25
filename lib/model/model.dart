@@ -2,13 +2,14 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:image/image.dart' as img;
 import 'package:tflite_flutter/tflite_flutter.dart';
-import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart' show rootBundle;
+// ignore: depend_on_referenced_packages
+import 'package:path/path.dart';
 
 class StyleTransferer {
   // Assets folder with the .tflite files
-  final MODELS_FOLDER = "models/";
+  final modeldFolder = "models/";
 
   // System folder where to save the results
   late String outputFolder;
@@ -33,9 +34,9 @@ class StyleTransferer {
 
   StyleTransferer(String name) {
     print("Loading model: $name");
-    name = "magenta" + "_" + "fp16";
-    _stylePredictor = MODELS_FOLDER + name + "_prediction.tflite";
-    _styleTransformer = MODELS_FOLDER + name + "_transfer.tflite";
+    this.name = "magenta" + "_" + "fp16";
+    _stylePredictor = modeldFolder + name + "_prediction.tflite";
+    _styleTransformer = modeldFolder + name + "_transfer.tflite";
   }
 
   Future<void> loadModel() async {
