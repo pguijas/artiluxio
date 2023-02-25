@@ -35,7 +35,7 @@ class InferenceScreen extends StatelessWidget {
 
     File inputFile = File(originalImagePath);
     File styleFile = File(stylePath);
-    StyleTransferer styleTransferer = StyleTransferer("magenta", "fp16");  // inicializarlo al principio
+    StyleTransferer styleTransferer = StyleTransferer("magenta", "int8");  // inicializarlo al principio
     await styleTransferer.loadModel();
     String output = await styleTransferer.transfer(inputFile, styleFile);
     imgPath = output;

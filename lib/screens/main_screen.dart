@@ -31,15 +31,28 @@ class MainScreen extends StatelessWidget {
     readLastInferences();
   }
 
-  void readLastInferences() async {
+  Future<bool> readLastInferences() async {
+    lastInferences = [];
+
     Directory dir = await getApplicationDocumentsDirectory();
     Directory inferenceDir = Directory(dir.path + "/inferences/");
     Stream<FileSystemEntity> fileStream = inferenceDir.list();
 
+    // Bug: this function is executed multiple times, so the list contains
+    // repeated list of elements. We use idx to overwrite the (same) image if
+    // it already exists, otherwise the element is appended to the end
+    int idx = 0;
     await for (FileSystemEntity file in fileStream) {
-      print(file.path);
-      lastInferences.add(file.path);
+      //file.deleteSync(recursive: true);  // to clean the folder
+      if (idx >= lastInferences.length) {
+        lastInferences.add(file.path);
+      } else {
+        lastInferences[idx] = file.path;
+      }
+      idx += 1;
     }
+
+    return true;
   }
 
   void goInference(BuildContext context, String imgPath) {
@@ -74,7 +87,7 @@ class MainScreen extends StatelessWidget {
         child: ClipRRect(
             borderRadius: BorderRadius.circular(2),
             child: Ink.image(
-              image: AssetImage(lastInferences[i]),
+              image: FileImage(File(lastInferences[i])),
               height: imgSize,
               width: imgSize,
               fit: BoxFit.cover,
@@ -184,6 +197,35 @@ class MainScreen extends StatelessWidget {
               )),
 
           // Last Inferences Scrollable
+          FutureBuilder<bool>(
+            future: readLastInferences(),
+              builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                List<Widget> children;
+                if (!snapshot.hasData || lastInferences.length == 0) {
+                  children = <Widget>[Text("No previous inferences.")];
+                } else {
+                  children = <Widget>[
+                    SizedBox(
+                      height: imgSize,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        padding: const EdgeInsets.all(0),
+                        itemCount: lastInferences.length,
+                        itemBuilder: (_, i) => itembluider(context, i),
+                        separatorBuilder: (_, i) => const SizedBox(width: 10),
+                      ),
+                    ),
+                  ];
+                }
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: children,
+                  ),
+                );
+              }
+          ),
+          /*
           SizedBox(
             height: imgSize,
             child: ListView.separated(
@@ -194,6 +236,8 @@ class MainScreen extends StatelessWidget {
               separatorBuilder: (_, i) => const SizedBox(width: 10),
             ),
           ),
+
+           */
         ],
       ),
       /*
