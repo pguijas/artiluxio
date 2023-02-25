@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:image/image.dart' as img;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'style_transferer.dart';
 
 import 'package:flutter/material.dart';
@@ -62,14 +61,23 @@ class _MyHomePageState extends State<MyHomePage> {
   File? _outputImage;
 
   StyleTransferer? styleTransferer;
+  String _currentModel = "magenta";
+  String _currentPrecision = "fp16";
 
   @override
   void initState() {
     super.initState();
-    main();
+    _loadModel();
   }
-  void main() async {
-    styleTransferer = StyleTransferer("magenta", "int8");
+
+  void _loadModel() async {
+    styleTransferer = StyleTransferer(_currentModel, _currentPrecision);
+  }
+
+  void _changeModel() async {
+    _currentPrecision = _currentPrecision == "int8" ? "fp16" : "int8";
+    print("Changed model to $_currentModel ($_currentPrecision)");
+    _loadModel();
   }
 
   void _getInputImage() async {
@@ -101,6 +109,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
     if (_styleImage == null) {
       print("Select an style image.");
+      return;
+    }
+
+    if (styleTransferer == null) {
+      print("Select a model.");
       return;
     }
 
@@ -206,6 +219,11 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: _predict,
             tooltip: 'Increment',
             child: const Icon(Icons.add),
+          ),
+          FloatingActionButton(
+            onPressed: _changeModel,
+            tooltip: 'Increment',
+            child: const Icon(Icons.adb),
           ),
         ]
       )

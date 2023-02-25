@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-import 'package:image/image.dart';
+import 'package:image/image.dart' as img;
 import 'package:tflite_flutter/tflite_flutter.dart';
 
 class StyleTransferer {
@@ -42,22 +42,22 @@ class StyleTransferer {
     print("Transformer (input, output) resolution: ($_inputImageSize, $_inputImageSize)");
   }
 
-  Image _preprocess(Image image, height, width) {
+  img.Image _preprocess(img.Image image, height, width) {
 
     // Resize to the a given (input) shape
-    Image transformed = copyResize(image, height: height, width: width);
+    img.Image transformed = img.copyResize(image, height: height, width: width);
 
     // Normalize between [0,1]
-    transformed = transformed.convert(format: Format.float32);
+    transformed = transformed.convert(format: img.Format.float32);
 
     return transformed;
   }
 
-  Future<void> transfer(Image input, Image style) async {
+  Future<void> transfer(img.Image input, img.Image style) async {
 
     print("Preprocessing inputs...");
-    Image processedInput = _preprocess(input, _inputImageSize, _inputImageSize);
-    Image processedStyle = _preprocess(style, _styleImageSize, _styleImageSize);
+    img.Image processedInput = _preprocess(input, _inputImageSize, _inputImageSize);
+    img.Image processedStyle = _preprocess(style, _styleImageSize, _styleImageSize);
     print("Preprocessing done.");
 
     var styleOutput = List.filled(_featuresStylizedSize, 0.0).reshape([1, 1, 1, _featuresStylizedSize]);
@@ -77,15 +77,15 @@ class StyleTransferer {
 
     print("Converting transformation to image...");
     var outputImage = _convertArrayToImage(outputData, _inputImageSize);
-    outputImage = copyResize(outputImage, width: input.width, height: input.height);
+    outputImage = img.copyResize(outputImage, width: input.width, height: input.height);
     print("Conversion finished.");
 
     print("Saving results...");
     String outputFile = OUTPUT_FOLDER + "output.jpg";
-    await encodeImageFile(outputFile, outputImage);
+    await img.encodeImageFile(outputFile, outputImage);
   }
 
-  Image _convertArrayToImage(List<dynamic> imageArray, int inputSize) {
+  img.Image _convertArrayToImage(List<dynamic> imageArray, int inputSize) {
     Uint8List bytes = Uint8List.fromList(
         List.filled(inputSize * inputSize * 3, 0));
 
@@ -98,7 +98,7 @@ class StyleTransferer {
       }
     }
 
-    Image newImage = Image.fromBytes(
+    img.Image newImage = img.Image.fromBytes(
         width: inputSize, height: inputSize, bytes: bytes.buffer);
 
     return newImage;
