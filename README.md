@@ -61,7 +61,7 @@ flutter run
 [cupertino_icons](https://pub.dev/packages/cupertino_icons/license) --> The MIT License \
 [flutter_bloc](https://pub.dev/packages/flutter_bloc) --> The MIT License \
 [image_picker](https://pub.dev/packages/image_picker/license) --> Apache-2.0, BSD-3-Clause \
-[flutter_speed_dial](https://pub.dev/packages/flutter_speed_dial) --> --> The MIT License \
+[flutter_speed_dial](https://pub.dev/packages/flutter_speed_dial) --> The MIT License \
 [tflite_flutter](https://pub.dev/packages/tflite_flutter) --> Apache-2.0 \
 [photo_view](https://pub.dev/packages/photo_view) --> The MIT License \
 [share_plus](https://pub.dev/packages/share_plus/license) --> BSD-3-Clause \
