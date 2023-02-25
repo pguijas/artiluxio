@@ -29,22 +29,6 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.black,
         ),
         themeMode: ThemeMode.system, // device controls theme
-        home: BlocProvider(
-            create: (_) => AppBloc(),
-            child: BlocBuilder<AppBloc, AppBlocState>(
-              builder: (context, state) {
-                if (state is AppBlocInitial) {
-                  return MainScreen();
-                } else if (state is AppBlocModelLoaded) {
-                  return const Center(child: Text('Model Loaded'));
-                } else if (state is AppBlocImgSelected) {
-                  return const Center(child: Text('Image Selected'));
-                } else if (state is AppBlocInferenceDone) {
-                  return const Center(child: Text('Inference Done'));
-                } else {
-                  return const Center(child: Text('Home Page'));
-                }
-              },
-            )));
+        home: BlocProvider(create: (_) => AppBloc(), child: MainScreen()));
   }
 }
