@@ -4,20 +4,30 @@
 
 ## 📚 Documentation
 
-## ✅ Features
 
-- Simply way to improve creativity.
+## ✅ Highlights
+
+- A simply way to improve creativity.
 - Art generator.
-- Easy to use and extend
 
-## 🤖 Demo
+## 🤖 Usage
+
+The application is oriented to be easy to use.
+When you open the application you will see the main screen where you can create a new inference from the camera or a selected image from the gallery.
+You will also be able to see the last created inferences and the available models.
+
+When you have the desired image, a second screen will appear where you can apply the models mentioned above, you can also upload a new model or reset the image.
+
+Once you have the image with the desired style you can download and share it! 
 
 ## 📥 Installation
 
 [Initial setup](https://pub.dev/packages/tflite_flutter) - Add dynamic libraries to your app.
 
 Desktop
-```bash
+```
+flutter pub get
+flutter run
 ```
 
 ## 📜 License
